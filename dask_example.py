@@ -13,8 +13,8 @@ import cdsw_dask_utils
 
 cluster = cdsw_dask_utils.run_dask_cluster(
   n=2, \
-  cpu=0.2, \
-  memory=0.5, \
+  cpu=1, \
+  memory=1, \
   nvidia_gpu=0
 )
 
@@ -22,7 +22,6 @@ cluster = cdsw_dask_utils.run_dask_cluster(
 # description.
 from dask.distributed import Client
 client = Client(cluster["scheduler_address"])
-
 
 def square(x):
   return x ** 2
