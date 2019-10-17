@@ -1,2 +1,5 @@
-"dask[complete]"
+dask[complete]==2.6.0
+dask-ml==1.0.0
+dask-glm==0.2.0
 joblib
+sklearn
