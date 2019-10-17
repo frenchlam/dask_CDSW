@@ -68,7 +68,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
 # ### parameters for grid search
-param_numTrees = list(range(10,200,5))
+param_numTrees = list(range(10,100,5))
 param_maxDepth = list(range(3,30,2))
 
 rfc = RandomForestClassifier(random_state=10, n_jobs=-1)
@@ -86,43 +86,20 @@ CV_rfc = GridSearchCV(estimator=rfc,
                      )
 
 # ### Fit Model
-# #### Connect a Dask client to the scheduler address in the cluster
+print ("normal backend" )
+CV_rfc.fit(X_train, y_train)
+
+
+# ## Connect a Dask client to the scheduler address in the cluster
+print("Dask Backend")
 
 from dask.distributed import Client
-import joblib
-
 client = Client(cluster["scheduler_address"])
 
-print("ready to fit model")
-
+import joblib
 with joblib.parallel_backend('dask'):
-    CV_rfc.fit(X_train, y_train)
+  CV_rfc.fit(X_train, y_train)
+
 
 # ### Show Best Parameters 
 print(CV_rfc.best_params_)
-
-
-# ### Prepare final Model
-rfc_final= RandomForestClassifier(n_estimators=CV_rfc.best_params_['n_estimators'] , 
-                                  max_depth=CV_rfc.best_params_['max_depth'], 
-                                  random_state=10)
-rfc_final.fit(X_train, y_train)
-y_true, y_pred = y_test, rfc_final.predict(X_test)
-
-
-
-# ## Step 3 : Evaluate Model
-# ### Evaluation metrics
-from sklearn.metrics import classification_report
-print(classification_report(y_true, y_pred))
-
-
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import average_precision_score
-auroc =  roc_auc_score(y_true, y_pred)
-average_precision = average_precision_score(y_true, y_pred)
-
-print("The AUROC is {:f} and the Average Precision is {:f}".format(auroc, average_precision))
-
-
-  
