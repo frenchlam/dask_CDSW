@@ -15,7 +15,7 @@ import pandas as pd
 # right corner of the CDSW app.
 
 cluster = cdsw_dask_utils.run_dask_cluster(
-  n=2, \
+  n=4, \
   cpu=1, \
   memory=2, \
   nvidia_gpu=0
@@ -68,8 +68,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
 # ### parameters for grid search
-param_numTrees = list(range(10,100,5))
-param_maxDepth = list(range(3,30,2))
+param_numTrees = list(range(10,50,5))
+param_maxDepth = list(range(4,16,2))
 
 rfc = RandomForestClassifier(random_state=10, n_jobs=-1)
 
@@ -89,6 +89,8 @@ CV_rfc = GridSearchCV(estimator=rfc,
 print ("normal backend" )
 CV_rfc.fit(X_train, y_train)
 
+# ### Show Best Parameters 
+print(CV_rfc.best_params_)
 
 # ## Connect a Dask client to the scheduler address in the cluster
 print("Dask Backend")
