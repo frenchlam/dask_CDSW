@@ -15,7 +15,7 @@ import pandas as pd
 # right corner of the CDSW app.
 
 cluster = cdsw_dask_utils.run_dask_cluster(
-  n=4, \
+  n=2, \
   cpu=1, \
   memory=2, \
   nvidia_gpu=0
