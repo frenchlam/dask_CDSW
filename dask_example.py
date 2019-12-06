@@ -2,7 +2,8 @@
 # terminal, not run directly in the graphical console. See
 # https://github.com/dask/dask/issues/4612
 
-import cdsw_dask_utils
+import cdsw_dask_utils 
+import cdsw_await_workers
 
 # Run a Dask cluster with three workers and return an object containing
 # a description of the cluster. 

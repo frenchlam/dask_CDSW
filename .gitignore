@@ -1,0 +1,8 @@
+R
+node_modules
+*.pyc
+.*
+!.gitignore
+worker-*
+global.lock
+purge.lock

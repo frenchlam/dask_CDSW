@@ -1,5 +1,3 @@
-!pip3 install -r requierments.txt
-
 import cdsw
 
 worker_code = '''
@@ -8,7 +6,7 @@ worker_code = '''
               print('executing a whole bunch of code inside worker: {}'.format(engine_id))
               '''
 
-workers = cdsw.launch_workers(n=3, 
+workers = cdsw.launch_workers(n=2, 
                               cpu=1, 
                               memory=1, 
                               code=worker_code) 
