@@ -22,7 +22,7 @@ def run_scheduler(scheduler_port=default_scheduler_port):
     "--port", 
     str(scheduler_port),
     "--dashboard-address",
-    ("127.0.0.1:%s" % os.environ["CDSW_APP_PORT"])
+    ("127.0.0.1:%s" % os.environ["CDSW_READONLY_PORT"])
 
   ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
   
