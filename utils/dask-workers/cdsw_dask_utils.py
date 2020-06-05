@@ -71,7 +71,17 @@ print(worker_proc.wait())
     kernel="python3", \
     code=worker_code
   )
-  ids = [worker['id'] for worker in  workers]
+  
+  try:
+    ids = [worker['id'] for worker in  workers]
+    
+  except KeyError as key : 
+    errors = [[worker['k8sMessage'],worker['engineId']] for worker in workers ]
+    for error in errors : 
+        print('''worker {} failed to launch with err message : 
+              {}'''.format(error[1],error[0]))
+    raise RuntimeError("failed to launch workers with err : "+error[0])
+  
   print("IDs", ids)
   # Wait for the workers to start running, but don't wait for them to exit - 
   # we want them to stay up for use as daemons.
